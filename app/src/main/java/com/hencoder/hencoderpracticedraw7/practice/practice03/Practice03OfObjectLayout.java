@@ -4,6 +4,8 @@ import android.animation.ObjectAnimator;
 import android.animation.TypeEvaluator;
 import android.content.Context;
 import android.graphics.PointF;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -49,10 +51,21 @@ public class Practice03OfObjectLayout extends RelativeLayout {
 
     private class PointFEvaluator implements TypeEvaluator<PointF> {
 
+        PointF newPoint = new PointF();
+
         // 重写 evaluate() 方法，让 PointF 可以作为属性来做动画
         @Override
         public PointF evaluate(float fraction, PointF startValue, PointF endValue) {
-            return startValue;
+            float startX = startValue.x;
+            float startY = startValue.y;
+            float endX = endValue.x;
+            float endY = endValue.y;
+
+            float cx = startX + (endX - startX) * fraction;
+            float cy = startY + (endY - startY) * fraction;
+
+            newPoint.set(cx, cy);
+            return newPoint;
         }
     }
 }
